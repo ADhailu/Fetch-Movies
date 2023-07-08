@@ -38,6 +38,7 @@
             color: black;
             font-weight: 300;
         }
+        
 
         .searchBtn:hover{
           background: #d9d3d3 !important;
@@ -45,7 +46,6 @@
         #searchInput:focus{
           outline:none !important;
         }
-
         .modal{
           margin-top: 100px !important;
         }
@@ -55,6 +55,9 @@
         }
         .offcanvas button:hover{
           font-size: large;
+        }
+        .navbar-nav a:hover{
+          border: 1px solid white;
         }
     </style>
 
@@ -70,7 +73,23 @@
       <span class="fas fa-bars-progress" style="color: white !important;"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="container-fluid d-lg-flex flex-md-column flex-md-column justify-content-end align-items-end" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-start">
+        <li class="nav-item">
+          <a class=" btn text-light" id="now_playing">Now Playing</a>
+        </li>
+
+        <li class="nav-item ">
+          <a class="btn text-light" id="tvShows">TV Shows </a>
+        </li>
+        
+        <li class="nav-item ">
+          <a class="btn text-light" id="topRated">Top Rated Movies</a>
+        </li>
+        <li class="nav-item ">
+          <a class="btn text-light" id="explore">Explore</a>
+        </li>
+      </ul>
+      <div class="form d-lg-flex flex-md-column flex-md-column justify-content-end align-items-end" id="navbarSupportedContent">
         <a id="night" class="btn fa fa-moon" style="font-size: 23px; color: white "></a><br>
         <a class="btn fa fa-user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" font-size: 23px; color: white">
         </a>
@@ -87,8 +106,9 @@
     <div class="col-md-8 d-flex flex-column justify-content-center align-items-center">
       <h2 class="text-center text-white"><span style="font-family: cursive; font-size: 40px;">Get</span> Movies</h2>
       <!-- input group -->
-      <div class="input-group mt-5 flex-nowrap d-flex flex-row justify-content-center align-items-center">
-      <input type="search" class="p-0" name="search" id="searchInput" placeholder="Search for Movies and Tv-shows" aria-describedby="addon-wrapping"  style="width: 100%; height: 50px;">
+      <h6 class="text-center text-white mt-5">Search For the best movies and TV shows or Explore and find you favorites</h6>
+      <div class="input-group flex-nowrap d-flex flex-row justify-content-center align-items-center">
+      <input type="text" class="p-0" name="search" id="searchInput" placeholder="Search for Movies and Tv-shows" aria-describedby="addon-wrapping"  style="width: 100%; height: 50px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: none;">
         <button type="button" class="input-group-text fa fa-search align-selft-center searchBtn" id="addon-wrapping" style="cursor: pointer; padding: 16px;"></button>
       </div>
     </div>
@@ -96,13 +116,13 @@
       <p class="text-white text-center mt-sm-3">Search Movies, Tv-Series, Reality shows and What Ever Genre you like</p>
     </div> -->
     <div class="container-fluid d-flex flex-row justify-content-center align-items-center mt-3">
-      <a class="btn btn-outline-light mx-2" id="now_playing">Now Playing</a>
+      <!-- <a class="btn btn-outline-light mx-2" id="now_playing">Now Playing</a>
             <a class="btn btn-outline-light mx-2" id="topRated">Top Rated Movies</a>
-            <a class="btn btn-outline-light" id="tvShows">TV Shows </a>
+            <a class="btn btn-outline-light" id="tvShows">TV Shows </a> -->
+            <!-- <a class="btn btn-outline-light" id="Discover">Discover </a> -->
     </div>
     
     <div class="box d-flex justify-content-center align-items-center mb-5">
-      
       <!-- <a href="#main" class="btn btn-outline-light mx-2" id="popular">Popular Movies</a> -->
     </div>
   </div>
@@ -111,9 +131,7 @@
 </div>
 </div>
 
-
 <!-- Main  -->
-
 
 <section>
   <div class="container-fluid">
@@ -131,6 +149,22 @@
 
         <div class="row row-cols-2 row-cols-lg-6  d-flex justify-content-start align-items-start" id="movies" style="color: white;">
         </div>
+        
+        
+        
+  </div>
+
+  <div class="container-fluid d-flex justify-content-start align-items-start">
+    <div class="row">
+      <div class="col-12">
+        <h4 id="TrendingMovies" class="text-white"></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row row-cols-2 row-cols-lg-6  d-flex justify-content-start align-items-start" id="trending" style="color: white;">
+    </div>
   </div>
 
 </section>
@@ -140,7 +174,7 @@
     <div class="row">
       <div class="col-12 d-flex flex-column justify-content-lg-center align-content-lg-center">
         <div class="mb-3 text-center d-flex flex-column justify-content-lg-center align-content-lg-center">
-          <label for="" class="form-label">Email</label>
+          <label for="" class="form-label text-white">Email</label>
           <input type="email" class="form-control w-50 align-self-center mt-1" name="" id="" aria-describedby="emailHelpId" placeholder="abc@mail.com">
           <textarea name="feedback" class="form-control w-50 align-self-center mt-1" id="feedback" cols="10" rows="5" placeholder="Put your feedback here"></textarea>
           <button type="submit" class="form-control w-50 btn btn-dark align-self-center mt-1">Submit</button>
@@ -165,7 +199,6 @@
 <script>
 
 // const scale = 1.806;
-
 
 // cards.forEach((card) => {
 //   card.addEventListener("mouseover", () => {
@@ -264,16 +297,16 @@
 
 
 <!-- Modal -->
-<div class="modal fade vh-100" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: serif; opacity: .8;">
+<div class="modal fade vh-100" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: serif;">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" style="background: linear-gradient(to bottom, #800080, #000000);">
       <div class="modal-header d-flex flex-row justify-content-center align-items-center" style="border: none !important;">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close text" style="color: white !important;" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <h1 class="modal-title fs-5 px-5 d-flex justify-content-center align-items-center" id="staticBackdropLabel" style="font-size: 30px !important;">Log In</h1>
+      <h1 class="modal-title fs-5 px-5 text-white d-flex justify-content-center align-items-center" id="staticBackdropLabel" style="font-size: 30px !important;">Log In</h1>
 
-      <div class="modal-body" style="border: none !important;">
-        <div class="form-control" style="border: none !important;">
+      <div class="modal-body " style="border: none !important;">
+        <div class="form-control bg-transparent py-3 text-white" style="border: none !important;">
 
           <div class="mb-3 row">
             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
@@ -291,10 +324,11 @@
 
         </div>
       </div>
-      <div class="modal-footer d-flex justify-content-center align-items-center">
+      <div class="modal-footer d-flex flex-column justify-content-center align-items-center">
         <!-- <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button> -->
-        <button type="submit" class="btn btn-outline-dark">LogIn</button>
-        <a class="link-primary">Register</a>
+        <button type="submit" class="btn btn-outline-light">LogIn</button>
+        <p class="text-light">Don't have an account ?</p>
+        <a class="icon-link-hover">Register</a>
       </div>
     </div>
   </div>
