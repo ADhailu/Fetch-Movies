@@ -1,52 +1,59 @@
 
-let displayPopular = document.querySelector("#displayPopular")
-displayPopular.classList.add("text-white")
-// const cards = document.querySelectorAll(".card");
-// const body = document.body;
+// let displayPopular = document.querySelector("#displayPopular")
+// displayPopular.classList.add("text-white")
+// // const cards = document.querySelectorAll(".card");
+// // const body = document.body;
 
-// let isNightMode = false;
-
-
-//   function toggleNightMode() {
-//     isNightMode = !isNightMode;
-//     if (isNightMode) {
-
-//       cards.forEach((card) => {
-//         card.classList.add("text-dark")
-//       });
-//       body.style.background = "white"
-//       displayPopular.classList.remove("text-white");
-//       document.querySelector(".form-label").classList.add("text-dark")
-
-//     } else {
-//       displayPopular.classList.add("text-white")
-//       body.style.background = "black";
-//       document.querySelector(".form-label").classList.remove("text-white")
-//       cards.forEach((card) => {
-//         card.classList.remove("text-dark")
-//       });
-//     //   displayPopular.classList.remove("text-white");
-//     }
-//   }
-
-//   const button = document.querySelector("#night");
-//   button.addEventListener("click", toggleNightMode);
+// // let isNightMode = false;
 
 
+  // function toggleNightMode() {
+  //   isNightMode = !isNightMode;
+  //   if (isNightMode) {
+
+  //     cards.forEach((card) => {
+  //       card.classList.add("text-dark")
+  //     });
+  //     body.style.background = "white"
+  //     displayPopular.classList.remove("text-white");
+  //     document.querySelector(".form-label").classList.add("text-dark")
+
+  //   } else {
+  //     displayPopular.classList.add("text-white")
+  //     body.style.background = "black";
+  //     document.querySelector(".form-label").classList.remove("text-white")
+  //     cards.forEach((card) => {
+  //       card.classList.remove("text-dark")
+  //     });
+  //   //   displayPopular.classList.remove("text-white");
+  //   }
+  // }
+
+  // const button = document.querySelector("#night");
+  // button.addEventListener("click", toggleNightMode);
 
 
-displayPopular.innerHTML = `<h2>Popular Movies</h2>`
+
+
+// displayPopular.innerHTML = `<h2>Popular Movies</h2>`
 
 const moviesList = document.querySelector('#movies');
-// 3398bf0ebd8da8c8aa4f0410fdeeb5df
 const searchButton = document.querySelector('.searchBtn');
 const searchInput = document.querySelector('#searchInput');
+      const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
 
 const searchTerm = '';
 
+searchInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13) {
+    // The user pressed enter
+    searchTerm = searchInput.value;
+    // Do something with the value
+  }
+});
+
 searchButton.onclick =  async () => {
   const searchTerm = searchInput.value;
-      const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
       const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}&language=en-US`;
 
   const response = await fetch(url);
@@ -59,7 +66,9 @@ searchButton.onclick =  async () => {
   const movies = json.results;
 
   moviesList.innerHTML = "";
-  document.querySelector("#displayPopular").innerHTML = `<h3>${searchTerm}</h3>`
+  trendingMovies.innerHTML = ""
+  document.querySelector("#TrendingMovies").innerHTML = ""
+  document.querySelector("#displayPopular").innerHTML = `<h3 class="text-white">Search For "${searchTerm}"</h3>`
 
   for (let i = 0; i < movies.length; i++) {
     const movie = movies[i];
@@ -67,7 +76,7 @@ searchButton.onclick =  async () => {
 
       <div class="col g-3 d-flex">
         <div class="card bg-transparent text-white" style="width: 18rem;cursor: pointer; height:auto; background:black">
-          <img class="card-img-top" src="${movie.image}" alt="${movie.title}" style=-"height:350px">
+          <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
           <div class="card-body">
             <h6 class="card-title">${movie.title}</h6>
             <p class="card-text">${movie.release_date}</p>
@@ -80,22 +89,14 @@ searchButton.onclick =  async () => {
 }
 
 
-const watchTrailer = (movie) => {
-  const trailerUrl = movie.trailers.results[0].url;
-  const video = document.createElement("video");
-  video.src = trailerUrl;
-  video.controls = true;
 
-  document.querySelector("#movies").appendChild(video);
-};
-// // button onclick functionalities
+// // // button onclick functionalities
 
 const popularMovies = document.getElementById("popular");
 
-window.onload = async () => {
-  // console.log('function')
+async function populars(){
 
-  const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
+
   const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US`;
 
   const response = await fetch(url);
@@ -125,15 +126,56 @@ window.onload = async () => {
 
   }
 
-  
+}
+
+let trendingMovies = document.querySelector("#trending")
+async function trending(){
+
+  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}&language=en-US`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    console.log('Error fetching data');
+  }
+
+  const json = await response.json();
+  const popular = json.results;
+
+const trendingText = document.querySelector("#TrendingMovies");
+trendingText.innerHTML = "Trending Movies";
+  for (let i = 0; i < popular.length; i++) {
+    const movie = popular[i];
+    trendingMovies.innerHTML += `
+
+      <div class="col g-3 d-flex">
+        <div class="card bg-transparent text-white">
+          <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+          <div class="card-body">
+            <h6 class="card-title">${movie.title}</h6>
+            <p class="card-text">${movie.release_date}</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+  }
+}
+window.onload = async () => {
+  document.querySelector("#displayPopular").innerHTML = `<h3 class="text-white">Popular Movies</h3>`
+  populars();
+  trending();
+
 };
 
 
 
+// On Button Clcik Functions
+
 topRated.onclick = async () => {
     // console.log('function')
 
-    const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
+
     const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US`;
 
     const response = await fetch(url);
@@ -145,8 +187,10 @@ topRated.onclick = async () => {
     const json = await response.json();
     const Top= json.results;
 
-    moviesList.innerHTML = " "
-    document.querySelector("#displayPopular").innerHTML = "Top Rated Movies"
+    moviesList.innerHTML = ""
+    trendingMovies.innerHTML = ""
+    document.querySelector("#TrendingMovies").innerHTML = ""
+    document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Top Rated</h4>`
     for (let i = 0; i < Top.length; i++) {
         const movie = Top[i];
         moviesList.innerHTML += `
@@ -165,7 +209,7 @@ topRated.onclick = async () => {
         `;
 
     }
-    watchTrailer(movie);
+
 }
 
 
@@ -173,7 +217,7 @@ topRated.onclick = async () => {
 let getNowPlaying = document.querySelector("#now_playing");
 getNowPlaying.onclick = async () => {
   
-  const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
+
   const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`;
 
   const response = await fetch(url);
@@ -185,8 +229,9 @@ getNowPlaying.onclick = async () => {
   const json = await response.json();
   const BoxOffice = json.results;
 
-  moviesList.innerHTML = " "
-document.querySelector("#displayPopular").innerHTML = "Now Playing"
+  moviesList.innerHTML = ""
+  trendingMovies.innerHTML = ""
+  document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Now Playing</h4>`
   for (let i = 0; i < BoxOffice.length; i++) {
       const movie = BoxOffice[i];
       moviesList.innerHTML += `
@@ -204,15 +249,15 @@ document.querySelector("#displayPopular").innerHTML = "Now Playing"
       `;
 
   }
-  watchTrailer(movie);
+
 }
 
 
 
 let TvShows = document.querySelector("#tvShows");
-TvShows.onclick = async () => {
+async function getTvShows(){
   
-  const apiKey = "3398bf0ebd8da8c8aa4f0410fdeeb5df";
+
   const url = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=en-US`;
 
   const response = await fetch(url);
@@ -227,8 +272,10 @@ TvShows.onclick = async () => {
     poster_path: series.poster_path,
     release_date: series.first_air_date,
   }));
-  moviesList.innerHTML = " "
-document.querySelector("#displayPopular").innerHTML = "Tv Shows"
+  moviesList.innerHTML = ""
+  trendingMovies.innerHTML = ""
+  document.querySelector("#TrendingMovies").innerHTML = ""
+document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Tv Shows</h4>`
   for (let i = 0; i < tv.length; i++) {
       const series = tv[i];
       moviesList.innerHTML += `
@@ -246,10 +293,19 @@ document.querySelector("#displayPopular").innerHTML = "Tv Shows"
       `;
 
   }
-  watchTrailer(series);
+
 }
 
+TvShows.addEventListener("click",getTvShows)
 
 
+let explore = document.querySelector("#explore")
 
-
+explore.onclick = async () =>{
+  trendingMovies.innerHTML = ""
+  moviesList.innerHTML = ""
+  document.querySelector("#TrendingMovies").innerHTML = ""
+  document.querySelector("#displayPopular").innerHTML = `<h3 class="text-white">Explore</h3>`
+  populars();
+  trending();
+}
