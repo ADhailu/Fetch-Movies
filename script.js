@@ -1,36 +1,38 @@
-
-// let displayPopular = document.querySelector("#displayPopular")
-// displayPopular.classList.add("text-white")
-// // const cards = document.querySelectorAll(".card");
-// // const body = document.body;
-
-// // let isNightMode = false;
-
-
-  // function toggleNightMode() {
-  //   isNightMode = !isNightMode;
-  //   if (isNightMode) {
-
-  //     cards.forEach((card) => {
-  //       card.classList.add("text-dark")
-  //     });
-  //     body.style.background = "white"
-  //     displayPopular.classList.remove("text-white");
-  //     document.querySelector(".form-label").classList.add("text-dark")
-
-  //   } else {
-  //     displayPopular.classList.add("text-white")
-  //     body.style.background = "black";
-  //     document.querySelector(".form-label").classList.remove("text-white")
-  //     cards.forEach((card) => {
-  //       card.classList.remove("text-dark")
-  //     });
-  //   //   displayPopular.classList.remove("text-white");
-  //   }
-  // }
-
-  // const button = document.querySelector("#night");
-  // button.addEventListener("click", toggleNightMode);
+// Theme toggler logic
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+      let darkMode = true;
+      themeToggle.addEventListener('click', function() {
+        darkMode = !darkMode;
+        if (darkMode) {
+          body.style.backgroundColor = 'black';
+          themeToggle.classList.remove('btn-dark');
+          themeToggle.classList.add('btn-light');
+          themeToggle.textContent = '🌙';
+        } else {
+          body.style.backgroundColor = 'white';
+          themeToggle.classList.remove('btn-light');
+          themeToggle.classList.add('btn-dark');
+          themeToggle.textContent = '☀️';
+        }
+        // Update the text color of the body
+        body.style.color = darkMode ? 'white' : 'black';
+        // update the h4 and h6 elements
+        document.querySelectorAll('h3,h4, h6').forEach(el => {
+          el.classList.toggle('text-dark', !darkMode);
+          el.classList.toggle('text-white', darkMode);
+        });
+        // Optionally, update other elements for theme
+        document.querySelectorAll('.card').forEach(card => {
+          card.classList.toggle('text-dark', !darkMode);
+          card.classList.toggle('text-white', darkMode);
+          card.style.background = darkMode ? 'black' : 'white';
+        });
+        document.querySelectorAll('.form-label').forEach(label => {
+          label.classList.toggle('text-dark', !darkMode);
+          label.classList.toggle('text-white', darkMode);
+        });
+      });
 
 
 
@@ -54,36 +56,31 @@ searchInput.addEventListener("keyup", (event) => {
 
 searchButton.onclick =  async () => {
   const searchTerm = searchInput.value;
-      const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}&language=en-US`;
-
+  const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}&language=en-US`;
   const response = await fetch(url);
-
   if (!response.ok) {
     console.log('Error fetching data');
   }
-
   const json = await response.json();
   const movies = json.results;
-
+  const imgBase = 'https://image.tmdb.org/t/p/w500';
   moviesList.innerHTML = "";
-  trendingMovies.innerHTML = ""
-  document.querySelector("#TrendingMovies").innerHTML = ""
-  document.querySelector("#displayPopular").innerHTML = `<h3 class="text-white">Search For "${searchTerm}"</h3>`
-
+  trendingMovies.innerHTML = "";
+  document.querySelector("#TrendingMovies").innerHTML = "";
+  document.querySelector("#displayPopular").innerHTML = `<h3 class="text-white">Search For "${searchTerm}"</h3>`;
   for (let i = 0; i < movies.length; i++) {
     const movie = movies[i];
+    const imgSrc = movie.poster_path ? imgBase + movie.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
     moviesList.innerHTML += `
-
       <div class="col g-3 d-flex">
         <div class="card bg-transparent text-white" style="width: 18rem;cursor: pointer; height:auto; background:black">
-          <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+          <img class="card-img-top" src="${imgSrc}" alt="${movie.title}" style="height:350px">
           <div class="card-body">
             <h6 class="card-title">${movie.title}</h6>
-            <p class="card-text">${movie.release_date}</p>
+            <p class="card-text">${movie.release_date || ''}</p>
           </div>
         </div>
       </div>
-    
     `;
   }
 }
@@ -109,21 +106,21 @@ async function populars(){
   const popular = json.results;
 
 
+  const imgBase = 'https://image.tmdb.org/t/p/w500';
   for (let i = 0; i < popular.length; i++) {
     const movie = popular[i];
+    const imgSrc = movie.poster_path ? imgBase + movie.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
     moviesList.innerHTML += `
-
       <div class="col g-3 d-flex">
         <div class="card bg-transparent text-white">
-          <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+          <img class="card-img-top" src="${imgSrc}" alt="${movie.title}" style="height:350px">
           <div class="card-body">
             <h6 class="card-title">${movie.title}</h6>
-            <p class="card-text">${movie.release_date}</p>
+            <p class="card-text">${movie.release_date || ''}</p>
           </div>
         </div>
       </div>
     `;
-
   }
 
 }
@@ -144,21 +141,21 @@ async function trending(){
 
 const trendingText = document.querySelector("#TrendingMovies");
 trendingText.innerHTML = "Trending Movies";
+  const imgBase = 'https://image.tmdb.org/t/p/w500';
   for (let i = 0; i < popular.length; i++) {
     const movie = popular[i];
+    const imgSrc = movie.poster_path ? imgBase + movie.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
     trendingMovies.innerHTML += `
-
       <div class="col g-3 d-flex">
         <div class="card bg-transparent text-white">
-          <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+          <img class="card-img-top" src="${imgSrc}" alt="${movie.title}" style="height:350px">
           <div class="card-body">
             <h6 class="card-title">${movie.title}</h6>
-            <p class="card-text">${movie.release_date}</p>
+            <p class="card-text">${movie.release_date || ''}</p>
           </div>
         </div>
       </div>
     `;
-
   }
 }
 window.onload = async () => {
@@ -191,23 +188,22 @@ topRated.onclick = async () => {
     trendingMovies.innerHTML = ""
     document.querySelector("#TrendingMovies").innerHTML = ""
     document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Top Rated</h4>`
+    const imgBase = 'https://image.tmdb.org/t/p/w500';
     for (let i = 0; i < Top.length; i++) {
         const movie = Top[i];
+        const imgSrc = movie.poster_path ? imgBase + movie.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
         moviesList.innerHTML += `
-
              <div class="col g-3 d-flex">
                 <div class="card bg-transparent text-white" style="width: 18rem;cursor: pointer; height:auto; background:black">
-                  <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+                  <img class="card-img-top" src="${imgSrc}" alt="${movie.title}" style="height:350px">
                   <div class="card-body">
                     <h6 class="card-title">${movie.title}</h6>
-                    <p class="card-text">${movie.release_date}</p>
+                    <p class="card-text">${movie.release_date || ''}</p>
                     <p class="card-text">Ratings: ${movie.vote_average}</p>
                   </div>
                 </div>
             </div>
-      
         `;
-
     }
 
 }
@@ -232,22 +228,21 @@ getNowPlaying.onclick = async () => {
   moviesList.innerHTML = ""
   trendingMovies.innerHTML = ""
   document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Now Playing</h4>`
+  const imgBase = 'https://image.tmdb.org/t/p/w500';
   for (let i = 0; i < BoxOffice.length; i++) {
       const movie = BoxOffice[i];
+      const imgSrc = movie.poster_path ? imgBase + movie.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
       moviesList.innerHTML += `
-
            <div class="col g-3 d-flex">
               <div class="card text-white bg-transparent" style="width: 18rem;cursor: pointer; height:auto; background:black">
-                <img class="card-img-top" src="${movie.poster_path}" alt="${movie.title}" style=-"height:350px">
+                <img class="card-img-top" src="${imgSrc}" alt="${movie.title}" style="height:350px">
                 <div class="card-body">
                   <h6 class="card-title">${movie.title}</h6>
-                  <p class="card-text">${movie.release_date}</p>
+                  <p class="card-text">${movie.release_date || ''}</p>
                 </div>
               </div>
           </div>
-    
       `;
-
   }
 
 }
@@ -276,22 +271,21 @@ async function getTvShows(){
   trendingMovies.innerHTML = ""
   document.querySelector("#TrendingMovies").innerHTML = ""
 document.querySelector("#displayPopular").innerHTML = `<h4 class="text-white">Tv Shows</h4>`
+  const imgBase = 'https://image.tmdb.org/t/p/w500';
   for (let i = 0; i < tv.length; i++) {
       const series = tv[i];
+      const imgSrc = series.poster_path ? imgBase + series.poster_path : 'https://via.placeholder.com/350x500?text=No+Image';
       moviesList.innerHTML += `
-
            <div class="col g-3 d-flex">
               <div class="card text-white bg-transparent" style="width: 18rem;cursor: pointer; height:auto">
-                <img class="card-img-top" src="${series.poster_path}" alt="${series.title}" style=-"height:350px; background:black">
+                <img class="card-img-top" src="${imgSrc}" alt="${series.title}" style="height:350px; background:black">
                 <div class="card-body">
                   <h6 class="card-title">${series.title}</h6>
-                  <p class="card-text">${series.release_date}</p>
+                  <p class="card-text">${series.release_date || ''}</p>
                 </div>
               </div>
           </div>
-    
       `;
-
   }
 
 }
