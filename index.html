@@ -1,340 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</head>
-
-<body style="background-color: black;">
-    <style>
-      *{
-        scroll-behavior: auto;
-      }
-      body{
-        font-family: serif;
-      }
-      a{
-        cursor: pointer;
-        text-decoration: none;
-      }
-        .card{
-          width: 14rem;
-            cursor: pointer;
-        }
-        /* .card:hover{
-            box-shadow: 0px 5px 3px 4px #cbc8c8;
-        } */
-        .card img{
-            height: 200px;
-            
-        }
-        .accordion-body a{
-            text-decoration:none;
-            color: black;
-            font-weight: 300;
-        }
-        
-
-        .searchBtn:hover{
-          background: #d9d3d3 !important;
-        }
-        #searchInput:focus{
-          outline:none !important;
-        }
-        .modal{
-          margin-top: 100px !important;
-        }
-       
-        .offcanvas a:hover{
-          font-size: large;
-        }
-        .offcanvas button:hover{
-          font-size: large;
-        }
-        .navbar-nav a:hover{
-          border: 1px solid white;
-        }
-    </style>
-
-<div class="container-fluid "  style="background:url(https://e1.pxfuel.com/desktop-wallpaper/647/351/desktop-wallpaper-the-black-panther-from-slfxbox-phone-black-panther-thumbnail.jpg) no-repeat; background-size: cover;">
-  <div class="container-fluid">
-<nav class="navbar navbar-expand-lg py-3">
-  <div class="container-fluid">
-    <div class="navbar-brand">
-      <button class="btn btn-lg fas fa-video" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" style="font-size: 30px; color: white;"></button>
-      
+  <body style="background-color: black">
+    <div
+      class="container-fluid"
+      style="
+        background: url(data:image/webp;base64,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)
+          no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+      "
+    >
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg py-3">
+          <div class="container-fluid">
+            <div class="navbar-brand">
+              <button
+                class="btn btn-lg fas fa-video"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasWithBothOptions"
+                aria-controls="offcanvasWithBothOptions"
+                title="Open offcanvas menu"
+              ></button>
+            </div>
+            <!-- Theme Toggler Button (moved outside brand) -->
+            <button id="themeToggle" class="btn btn-light position-fixed" style="top: 24px; right: 24px; z-index: 9999;" title="Toggle theme">🌙</button>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="fas fa-bars-progress" style="color: white !important"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-start">
+                <li class="nav-item">
+                  <a class="btn text-light" id="now_playing">Now Playing</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn text-light" id="tvShows">TV Shows </a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn text-light" id="topRated">Top Rated Movies</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn text-light" id="explore">Explore</a>
+                </li>
+              </ul>
+             
+            </div>
           </div>
-    <button class="navbar-toggler" style="color: white !important;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="fas fa-bars-progress" style="color: white !important;"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-start">
-        <li class="nav-item">
-          <a class=" btn text-light" id="now_playing">Now Playing</a>
-        </li>
+        </nav>
 
-        <li class="nav-item ">
-          <a class="btn text-light" id="tvShows">TV Shows </a>
-        </li>
-        
-        <li class="nav-item ">
-          <a class="btn text-light" id="topRated">Top Rated Movies</a>
-        </li>
-        <li class="nav-item ">
-          <a class="btn text-light" id="explore">Explore</a>
-        </li>
-      </ul>
-      <div class="form d-lg-flex flex-md-column flex-md-column justify-content-end align-items-end" id="navbarSupportedContent">
-        <a id="night" class="btn fa fa-moon" style="font-size: 23px; color: white "></a><br>
-        <a class="btn fa fa-user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" font-size: 23px; color: white">
-        </a>
-  
-      </div>
-    </div>
-  </div>
-</nav>
+        <!-- NavBar Ends Here -->
 
-<!-- NavBar Ends Here -->
+        <!-- Search Bar -->
+        <div
+          class="row d-flex flex-column justify-content-center align-items-center mb-5"
+        >
+          <div
+            class="col-md-8 d-flex flex-column justify-content-center align-items-center"
+          >
+            <h2 class="text-center text-white">
+              <span style="font-family: cursive; font-size: 40px">Get</span>
+              Movies
+            </h2>
+            <!-- input group -->
+         
+            <div class="input-group mb-3" style="max-width: 600px;">
+              <input
+              type="text"
+              class="form-control"
+              name="search"
+              id="searchInput"
+              placeholder="Search for Movies and TV shows"
+              />
+              <button
+              title="Search"
+              type="button"
+              class="btn btn-dark searchBtn"
+              id="addon-wrapping"
+              >
+              <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
 
-<!-- Search Bar -->
-  <div class="row  d-flex flex-column justify-content-center align-items-center mb-5">
-    <div class="col-md-8 d-flex flex-column justify-content-center align-items-center">
-      <h2 class="text-center text-white"><span style="font-family: cursive; font-size: 40px;">Get</span> Movies</h2>
-      <!-- input group -->
-      <h6 class="text-center text-white mt-5">Search For the best movies and TV shows or Explore and find you favorites</h6>
-      <div class="input-group flex-nowrap d-flex flex-row justify-content-center align-items-center">
-      <input type="text" class="p-0" name="search" id="searchInput" placeholder="Search for Movies and Tv-shows" aria-describedby="addon-wrapping"  style="width: 100%; height: 50px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: none;">
-        <button type="button" class="input-group-text fa fa-search align-selft-center searchBtn" id="addon-wrapping" style="cursor: pointer; padding: 16px;"></button>
-      </div>
-    </div>
-    <!-- <div class="col-12">
-      <p class="text-white text-center mt-sm-3">Search Movies, Tv-Series, Reality shows and What Ever Genre you like</p>
-    </div> -->
-    <div class="container-fluid d-flex flex-row justify-content-center align-items-center mt-3">
-      <!-- <a class="btn btn-outline-light mx-2" id="now_playing">Now Playing</a>
-            <a class="btn btn-outline-light mx-2" id="topRated">Top Rated Movies</a>
-            <a class="btn btn-outline-light" id="tvShows">TV Shows </a> -->
-            <!-- <a class="btn btn-outline-light" id="Discover">Discover </a> -->
-    </div>
-    
-    <div class="box d-flex justify-content-center align-items-center mb-5">
-      <!-- <a href="#main" class="btn btn-outline-light mx-2" id="popular">Popular Movies</a> -->
-    </div>
-  </div>
+          <div
+            class="container-fluid d-flex flex-row justify-content-center align-items-center mt-3"
+          >
 
+          </div>
 
-</div>
-</div>
-
-<!-- Main  -->
-
-<section>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12">
-      <h3 class="mx-3" id="displayPopular"></h3>
-      </div>
-    </div>
-    </div>
-</section>
-
-<section id="main">
-  <!-- Main Content starts here-->
-    <div class="container-fluid d-flex justify-content-start align-items-start">
-
-        <div class="row row-cols-2 row-cols-lg-6  d-flex justify-content-start align-items-start" id="movies" style="color: white;">
-        </div>
-        
-        
-        
-  </div>
-
-  <div class="container-fluid d-flex justify-content-start align-items-start">
-    <div class="row">
-      <div class="col-12">
-        <h4 id="TrendingMovies" class="text-white"></h4>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div class="row row-cols-2 row-cols-lg-6  d-flex justify-content-start align-items-start" id="trending" style="color: white;">
-    </div>
-  </div>
-
-</section>
-
-<footer class="border-top mt-5">
-  <div class="container-fluid mt-2">
-    <div class="row">
-      <div class="col-12 d-flex flex-column justify-content-lg-center align-content-lg-center">
-        <div class="mb-3 text-center d-flex flex-column justify-content-lg-center align-content-lg-center">
-          <label for="" class="form-label text-white">Email</label>
-          <input type="email" class="form-control w-50 align-self-center mt-1" name="" id="" aria-describedby="emailHelpId" placeholder="abc@mail.com">
-          <textarea name="feedback" class="form-control w-50 align-self-center mt-1" id="feedback" cols="10" rows="5" placeholder="Put your feedback here"></textarea>
-          <button type="submit" class="form-control w-50 btn btn-dark align-self-center mt-1">Submit</button>
+          <div
+            class="box d-flex justify-content-center align-items-center mb-5"
+          >
+          </div>
         </div>
       </div>
-      <div class="col-12 text-center d-flex flex-column justify-content-lg-center align-content-lg-center">
-        <a href="#" class="link-light">contact Us</a>
-        <a href="#" class="link-light">Help </a>
-      </div>
     </div>
-    <div class="row text-white">
-      <div class="col-12 text-center d-flex flex-column justify-content-lg-center align-content-lg-center">
-        <p>Terms of services - contact</p>
-      <p>@2023 getMovies.net</p>
+
+    <!-- Main  -->
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="mx-3" id="displayPopular"></h3>
+            <div class="box d-flex justify-content-center align-items-center mb-4"></div>
+          </div>
+
+    <section id="main">
+      <!-- Main Content starts here-->
+      <div
+        class="container-fluid d-flex justify-content-start align-items-start"
+      >
+        <div
+          class="row row-cols-2 row-cols-lg-6 d-flex justify-content-start align-items-start"
+          id="movies"
+          style="color: white"
+        ></div>
       </div>
-    </div>
-  </div>
-</footer>
-<!-- content ends -->
 
+      <div
+        class="container-fluid d-flex justify-content-start align-items-start"
+      >
+        <div class="row my-5">
+          <div class="col-12">
+            <h4 id="TrendingMovies" class="text-white"></h4>
+          </div>
+        </div>
+      </div>
 
-<script>
+      <div class="container-fluid">
+        <div
+          class="row row-cols-2 row-cols-lg-6 d-flex justify-content-start align-items-start"
+          id="trending"
+          style="color: white"
+        ></div>
+      </div>
+    </section>
 
-// const scale = 1.806;
+    <footer class="border-top mt-5">
+      <div class="container-fluid mt-2">
+        <div class="row">
+          <div
+            class="col-12 d-flex flex-column justify-content-lg-center align-content-lg-center"
+          >
+            <div
+              class="mb-3 text-center d-flex flex-column justify-content-lg-center align-content-lg-center"
+            >
+              <label for="" class="form-label text-white">Email</label>
+              <input
+                type="email"
+                class="form-control w-50 align-self-center mt-1"
+                name=""
+                id=""
+                aria-describedby="emailHelpId"
+                placeholder="abc@mail.com"
+              />
+              <textarea
+                name="feedback"
+                class="form-control w-50 align-self-center mt-1"
+                id="feedback"
+                cols="10"
+                rows="5"
+                placeholder="Put your feedback here"
+              ></textarea>
+              <button
+                type="submit"
+                class="form-control w-50 btn btn-dark align-self-center mt-1"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+          <div
+            class="col-12 text-center d-flex flex-column justify-content-lg-center align-content-lg-center"
+          >
+            <a href="#" class="link-light">contact Us</a>
+            <a href="#" class="link-light">Help </a>
+          </div>
+        </div>
+        <div class="row text-white">
+          <div
+            class="col-12 text-center d-flex flex-column justify-content-lg-center align-content-lg-center"
+          >
+            <p>Terms of services - contact</p>
+            <p>@2023 getMovies.net</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- content ends -->
 
-// cards.forEach((card) => {
-//   card.addEventListener("mouseover", () => {
-//     card.style.transform = "scale(" + scale + ")";
-//   });
+    <script>
+      // const scale = 1.806;
 
-//   card.addEventListener("mouseout", () => {
-//     card.style.transform = "scale(1)";
-//   });
-// });
+      // cards.forEach((card) => {
+      //   card.addEventListener("mouseover", () => {
+      //     card.style.transform = "scale(" + scale + ")";
+      //   });
 
+      //   card.addEventListener("mouseout", () => {
+      //     card.style.transform = "scale(1)";
+      //   });
+      // });
+    </script>
 
-
-</script>
-
-<!-- Canvas -->
-<div class="offcanvas offcanvas-start w-auto bg-transparent" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="width: 20%; background-color: black;">
-  <div class="offcanvas-header py-5">
-    <!-- <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Get Movies</h5> -->
-  </div>
-  <div class="offcanvas-body text-white" style="color: white !important;">
-    <div class="container bg-transparent d-flex flex-column justify-content-center align-items-center">
-
-        <div class="accordion accordion-flush bg-transparent d-flex flex-column justify-content-center align-items-center" id="accordionFlushExample" style="color: white !important;">
+    <!-- Canvas -->
+    <div
+      class="offcanvas offcanvas-start w-auto bg-transparent"
+      data-bs-scroll="true"
+      tabindex="-1"
+      id="offcanvasWithBothOptions"
+      aria-labelledby="offcanvasWithBothOptionsLabel"
+      style="width: 20%; background-color: black"
+    >
+      <div class="offcanvas-header py-5">
+        <!-- <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Get Movies</h5> -->
+      </div>
+      <div class="offcanvas-body text-white" style="color: white !important">
+        <div
+          class="container bg-transparent d-flex flex-column justify-content-center align-items-center"
+        >
+          <div
+            class="accordion accordion-flush bg-transparent d-flex flex-column justify-content-center align-items-center"
+            id="accordionFlushExample"
+            style="color: white !important"
+          >
             <div class="accordion-item bg-transparent">
-              <h2 class="accordion-header bg-transparent">
-              </h2>
-              <div class="links d-flex flex-column justify-content-center align-items-center">
-                <a class="collapsed bg-transparent" style="color: white;" data-bs-toggle="collapse" >
+              <h2 class="accordion-header bg-transparent"></h2>
+              <div
+                class="links d-flex flex-column justify-content-center align-items-center"
+              >
+                <a
+                  class="collapsed bg-transparent"
+                  style="color: white"
+                  data-bs-toggle="collapse"
+                >
                   TvShows
                 </a>
-                <br>
-                <a class="collapsed bg-transparent" style="color: white;" data-bs-toggle="collapse" >
+                <br />
+                <a
+                  class="collapsed bg-transparent"
+                  style="color: white"
+                  data-bs-toggle="collapse"
+                >
                   Movies
                 </a>
               </div>
-                <button class="accordion-button collapsed bg-transparent" style="color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                  Genre
-                </button>
-              <div id="flush-collapseOne" class="accordion-collapse collapse bg-transparent " data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body bg-transparent" >
-                    <div class="container d-flex flex-column bg-transparent ">
-                        <a href="#" style="color: white;">Adventure</a>
-                 <a href="#" style="color: white;">Action</a>
-                 <a href="#" style="color: white;">Romance</a>
-                 <a href="#" style="color: white;">Crime</a>
-                 <a href="#" style="color: white;">Drama</a>
-                 <a href="#" style="color: white;">Fantasy</a>
-                 <a href="#" style="color: white;">Sci-Fi</a>
-                 <a href="#" style="color: white;">Animation</a>
-                 <a href="#" style="color: white;">Comedy</a>
-                 <a href="#" style="color: white;">Family</a>
-                 <a href="#" style="color: white;">Kids</a>
-                 <a href="#" style="color: white;">History</a>
-                 <a href="#" style="color: white;">Horor</a>
-                 <a href="#" style="color: white;">Music</a>
-                 <a href="#" style="color: white;">Mistery</a>
-                 <a href="#" style="color: white;">Reality</a>
-                 <a href="#" style="color: white;">War</a>
-                 <a href="#" style="color: white;">Politics</a>
-                    </div>
+              <button
+                class="accordion-button collapsed bg-transparent"
+                style="color: white"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                Genre
+              </button>
+              <div
+                id="flush-collapseOne"
+                class="accordion-collapse collapse bg-transparent"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <div class="accordion-body bg-transparent">
+                  <div class="container d-flex flex-column bg-transparent">
+                    <a href="#">Adventure</a>
+                    <a href="#">Action</a>
+                    <a href="#">Romance</a>
+                    <a href="#">Crime</a>
+                    <a href="#">Drama</a>
+                    <a href="#">Fantasy</a>
+                    <a href="#">Sci-Fi</a>
+                    <a href="#">Animation</a>
+                    <a href="#">Comedy</a>
+                    <a href="#">Family</a>
+                    <a href="#">Kids</a>
+                    <a href="#">History</a>
+                    <a href="#">Horor</a>
+                    <a href="#">Music</a>
+                    <a href="#">Mistery</a>
+                    <a href="#">Reality</a>
+                    <a href="#">War</a>
+                    <a href="#">Politics</a>
+                  </div>
                 </div>
               </div>
             </div>
             <!--  -->
 
-            
-
-
             <!-- Second item -->
-            <div class="accordion-item bg-transparent d-flex flex-column justify-content-center align-items-center">
+            <div
+              class="accordion-item bg-transparent d-flex flex-column justify-content-center align-items-center"
+            >
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed " style="background: transparent; color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                <button
+                  class="accordion-button collapsed"
+                  style="background: transparent; color: white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseTwo"
+                >
                   Language
                 </button>
               </h2>
-              <div id="flush-collapseTwo" class="accordion-collapse collapse bg-transparent " data-bs-parent="#accordionFlushExample">
+              <div
+                id="flush-collapseTwo"
+                class="accordion-collapse collapse bg-transparent"
+                data-bs-parent="#accordionFlushExample"
+              >
                 <div class="accordion-body d-flex flex-column">
-                    <a href="#" style="color: white;">English</a>
-                    <a href="#" style="color: white;">Russian</a>
-                    <a href="#" style="color: white;">Chineese</a>
-                    <a href="#" style="color: white;">Spanish</a>
-                    <a href="#" style="color: white;">Swahili</a>
-                    <a href="#" style="color: white;">Amharic</a>
+                  <a href="#">English</a>
+                  <a href="#">Russian</a>
+                  <a href="#">Chineese</a>
+                  <a href="#">Spanish</a>
+                  <a href="#">Swahili</a>
+                  <a href="#">Amharic</a>
                 </div>
               </div>
             </div>
           </div>
-
-    </div>
-  </div>
-</div>
-<!-- Canavas Ends Here -->
-
-<!-- Login Modal -->
-
-
-<!-- Modal -->
-<div class="modal fade vh-100" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="font-family: serif;">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background: linear-gradient(to bottom, #800080, #000000);">
-      <div class="modal-header d-flex flex-row justify-content-center align-items-center" style="border: none !important;">
-        <button type="button" class="btn-close text" style="color: white !important;" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <h1 class="modal-title fs-5 px-5 text-white d-flex justify-content-center align-items-center" id="staticBackdropLabel" style="font-size: 30px !important;">Log In</h1>
-
-      <div class="modal-body " style="border: none !important;">
-        <div class="form-control bg-transparent py-3 text-white" style="border: none !important;">
-
-          <div class="mb-3 row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-              <input type="emai." class="form-control" id="email" placeholder="Abc@example.com">
-            </div>
-          </div>
-
-          <div class="mb-5 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="password" placeholder="123***">
-            </div>
-          </div>
-
         </div>
       </div>
-      <div class="modal-footer d-flex flex-column justify-content-center align-items-center">
-        <!-- <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button> -->
-        <button type="submit" class="btn btn-outline-light">LogIn</button>
-        <p class="text-light">Don't have an account ?</p>
-        <a class="icon-link-hover">Register</a>
-      </div>
     </div>
-  </div>
-</div>
+    <!-- Canavas Ends Here -->
 
-
-    <script src="fetch.js"></script>
-</body>
+    <script src="script.js"></script>
+    <script>
+      // Enable search on Enter key
+      document.addEventListener('DOMContentLoaded', function() {
+        var searchInput = document.getElementById('searchInput');
+        var searchBtn = document.querySelector('.searchBtn');
+        if (searchInput && searchBtn) {
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+              searchBtn.click();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
