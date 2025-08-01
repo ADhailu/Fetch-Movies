@@ -15,14 +15,11 @@
           themeToggle.classList.add('btn-dark');
           themeToggle.textContent = '☀️';
         }
-        // Update the text color of the body
         body.style.color = darkMode ? 'white' : 'black';
-        // update the h4 and h6 elements
         document.querySelectorAll('h3,h4, h6').forEach(el => {
           el.classList.toggle('text-dark', !darkMode);
           el.classList.toggle('text-white', darkMode);
         });
-        // Optionally, update other elements for theme
         document.querySelectorAll('.card').forEach(card => {
           card.classList.toggle('text-dark', !darkMode);
           card.classList.toggle('text-white', darkMode);
